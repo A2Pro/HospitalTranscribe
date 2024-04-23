@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Recorder</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Audio Recorder</h1>
+    <div id="status"></div>
+    <button id="startBtn">Start Recording</button>
+    <button id="stopBtn">Stop Recording</button>
+    <script>
+        $(document).ready(function() {
+            // Event listener for the start recording button
+            $("#startBtn").click(function() {
+                fetch('/start_record', { method: 'POST' })
+                .then(response => response.text())
+                .then(data => {
+                    $('#status').text(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+
+            // Event listener for the stop recording button
+            $("#stopBtn").click(function() {
+                fetch('/stop_record', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    $('#status').text(data.message);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+
+            // Event listener for receiving audio chunks
+            var socket = new WebSocket("ws://localhost:5000/audio_chunk");
+            socket.onmessage = function(event) {
+                console.log("Received chunk:", event.data);
+            };
+        });
+    </script>
+</body>
+</html>
