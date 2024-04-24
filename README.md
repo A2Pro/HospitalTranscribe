@@ -1,2 +1,4 @@
 # HospitalTranscribe
 Live transcribe and place a prompt upon all data.
+
+# ALL WORKING CODE IS PRIVATE, DO NOT USE THIS GIT AS IT'S REALLY BROKEN / DOESN'T EVEN GIVE YOU THE ORIGINAL FUNCTIONALITY
